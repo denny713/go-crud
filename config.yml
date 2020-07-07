@@ -1,8 +1,0 @@
-server:
-  port: "7081"
-database:
-  host: "localhost"
-  port: "3306"
-  user: "root"
-  pass: "p@ssw0rd"
-  dbnm: "crud_demo"
