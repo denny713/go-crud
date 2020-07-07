@@ -5,6 +5,7 @@ import (
 	"Github/go-crud/model"
 	"Github/go-crud/route"
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 )
 
@@ -21,6 +22,5 @@ func SetupDb() {
 	if err != nil {
 		fmt.Println("Error : ", err)
 	}
-	defer config.DB.Close()
 	config.DB.AutoMigrate(&model.User{})
 }

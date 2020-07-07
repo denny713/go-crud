@@ -23,12 +23,9 @@ func GetByUsername(user *User, id string) (err error) {
 	return nil
 }
 
-func UpdateUser(user *User, id string) (err error) {
-	config.DB.Save(user)
-	return nil
-}
-
 func DeleteUser(user *User, id string) (err error) {
-	config.DB.Where("username = ?", id).Delete(user)
+	if err = config.DB.Where("username = ?", id).Delete(user).Error; err != nil {
+		return err
+	}
 	return nil
 }
