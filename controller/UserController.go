@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"../util"
 	"Github/go-crud/model"
-	"crypto/sha256"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -32,9 +32,7 @@ func GetUserByUsername(c *gin.Context) {
 func SaveUser(c *gin.Context) {
 	var user model.User
 	c.BindJSON(&user)
-	pass := []byte(user.Password)
-	hash := sha256.Sum256(pass)
-	user.Password = fmt.Sprintf("%x", hash)
+	user.Password = util.EncryptText(user.Password)
 	err := model.CreateUser(&user)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -56,9 +54,7 @@ func UpdateUser(c *gin.Context) {
 	}
 	c.BindJSON(&user)
 	userUpd = user
-	pass := []byte(user.Password)
-	hash := sha256.Sum256(pass)
-	userUpd.Password = fmt.Sprintf("%x", hash)
+	userUpd.Password = util.EncryptText(user.Password)
 	err = model.DeleteUser(&user, id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
